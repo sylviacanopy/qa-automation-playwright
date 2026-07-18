@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and Push Base Image
         run: |
-          docker build -t $DOCKERHUB_USERNAME/bootcamp_automation_2a:base .
-          docker push $DOCKERHUB_USERNAME/bootcamp_automation_2a:base
+          docker build -t $DOCKERHUB_USERNAME/qa-automation-playwright:base .
+          docker push $DOCKERHUB_USERNAME/qa-automation-playwright:base
         env:
           DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
