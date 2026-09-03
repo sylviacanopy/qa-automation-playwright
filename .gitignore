@@ -1,4 +1,5 @@
-
+agentq.config.json
+.env
 # Playwright
 node_modules/
 /test-results/

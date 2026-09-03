@@ -18,18 +18,18 @@ export default defineConfig({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: parseInt(`${process.env.RETRY}`),
+  retries: process.env.RETRY ? parseInt(process.env.RETRY, 10) : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.WORKER ? parseInt(`${process.env.WORKER}`, 10) : 1,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    // baseURL: 'http://localhost:3000',
+    baseURL: process.env.BASE_URL || 'https://www.emra.chat',
     trace: 'on-first-retry',     // Alat debug spesifik
     screenshot: 'only-on-failure',
     // video: 'retain-on-failure',
-    headless: true
+    headless: process.env.HEADLESS !== 'false'
   },
 
   /* Configure projects for major browsers */

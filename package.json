@@ -13,6 +13,10 @@
     "@types/node": "^26.1.0"
   },
   "dependencies": {
+    "agentq-playwright": "^1.0.67",
     "dotenv": "^17.4.2"
+  },
+  "allowScripts": {
+    "fsevents@2.3.2": true
   }
 }
