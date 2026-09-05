@@ -8,13 +8,29 @@ import dotenv from 'dotenv';
 import path from 'path';
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+const webBaseUrl = process.env.BASE_URL || 'https://www.emra.chat';
+const apiBaseUrl = process.env.API_BASE_URL || webBaseUrl;
+const agentQEnabled = process.env.AGENTQ_ENABLED === 'true';
+
+if (agentQEnabled) {
+  const requiredAgentQVariables = [
+    'AGENTQ_API_KEY',
+    'AGENTQ_PROJECT_ID',
+    'AGENTQ_TESTRUN_ID',
+  ];
+  const missingAgentQVariables = requiredAgentQVariables.filter((name) => !process.env[name]?.trim());
+  if (missingAgentQVariables.length > 0) {
+    throw new Error(`AgentQ API-key sync cannot start. Missing: ${missingAgentQVariables.join(', ')}`);
+  }
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
-  fullyParallel: true,
+  fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
@@ -25,7 +41,7 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: process.env.BASE_URL || 'https://www.emra.chat',
+    baseURL: webBaseUrl,
     trace: 'on-first-retry',     // Alat debug spesifik
     screenshot: 'only-on-failure',
     // video: 'retain-on-failure',
@@ -37,7 +53,13 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: 'api',
+      testMatch: /.*\/api\/.*\.spec\.ts/,
+      use: { baseURL: apiBaseUrl },
+    },
+    {
+      name: 'ui',
+      testMatch: /.*\/ui\/.*\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
 

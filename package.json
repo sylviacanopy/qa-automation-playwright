@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:api": "playwright test --project=api",
+    "test:ui": "playwright test --project=ui",
+    "test:login": "playwright test tests/api tests/ui",
+    "test:agentq": "AGENTQ_ENABLED=true playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,7 +19,7 @@
     "@types/node": "^26.1.0"
   },
   "dependencies": {
-    "agentq-playwright": "^1.0.67",
+    "agentq-playwright": "^1.0.69",
     "dotenv": "^17.4.2"
   },
   "allowScripts": {
