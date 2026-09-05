@@ -29,7 +29,9 @@ export default defineConfig({
     trace: 'on-first-retry',     // Alat debug spesifik
     screenshot: 'only-on-failure',
     // video: 'retain-on-failure',
-    headless: process.env.HEADLESS !== 'false'
+    // GitHub-hosted runners do not have an X server, so CI must stay headless.
+    // Locally, HEADLESS=false can still be used to open the browser UI.
+    headless: process.env.CI ? true : process.env.HEADLESS !== 'false',
   },
 
   /* Configure projects for major browsers */
