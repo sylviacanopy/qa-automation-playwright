@@ -19,7 +19,11 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npm run test:agentq
+      env:
+        AGENTQ_API_KEY: ${{ secrets.AGENTQ_API_KEY }}
+        AGENTQ_PROJECT_ID: ${{ secrets.AGENTQ_PROJECT_ID }}
+        AGENTQ_TESTRUN_ID: ${{ secrets.AGENTQ_TESTRUN_ID }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
