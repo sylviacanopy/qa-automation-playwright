@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from 'agentq-playwright';
-import { LoginPage } from '../support/login.page';
+import { LoginPage } from '../../pages/login.page';
 import {
   LOGIN_PATH,
   VALID_EMAIL,
